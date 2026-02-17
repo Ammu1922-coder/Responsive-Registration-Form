@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+
+
+    </style>
+</head>
+<body>
+    
+ <h2 >Login</h2>
+
+ <input type="email" placeholder="Email" id="email"><br><br>
+ <input type="password" placeholder="password" id="password"><br><br>
+ <button id="ActionBtn">Login</button>
+ <p>
+    Don't have an account?<span id="toggle">Signup</span>
+ </p>
+<p id="error" style="color: red;"></p>
+
+<script>
+const title=document.querySelector("#title");
+const error=document.querySelector("#error");
+const emailInput=document.querySelector("#email");
+const passwordInput=document.querySelector("#password");
+
+
+
+ActionBtn.addEventListener("click",()=>{
+
+    const email=emailInput.value.trim();
+    const password=passwordInput.value.trim();
+
+    const savedUser=JSON.parse(localStorage.getItem("users"))||[];
+
+    if(savedUser.length===0){
+        error.textContent="No Account Found.please signup.";
+        return;
+    }
+
+     const matchedUser=savedUser.find(user=>
+     user.email===email && user.password===password   //find()  Object / undefined  Getting actual item
+    );
+       
+    if (matchedUser){
+        localStorage.setItem("loggedIn","true");
+        localStorage.setItem("currentUser",email);
+        alert("login succefull!");
+        window.location.href="dashboard.html";
+    }
+    
+    else{
+        error.textContent="Invalid email or password";
+
+    }
+});
+
+toggle.addEventListener("click",()=>{
+
+    window.location.href="reg.html";
+      error.textContent="";
+});
+
+
+
+</script>
+</body>
+</html>

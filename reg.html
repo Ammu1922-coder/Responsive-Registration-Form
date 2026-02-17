@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form-IT Fest</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Student</legend>
+    <form>
+        <label for="name">NAME:</label>
+        <input type="text" placeholder="Full Name" required><br><br>
+
+             <label for="name">Email:</label>
+        <input type="email" placeholder="Email" pattern="^[a-zA-z.%-+]+@[a-zA-Z.-]+(.com)$" id="email"><br><br>
+
+        <label for="password">password:</label>
+        <input type="password" name="pass" id="password"><br><br>
+
+                <label for="password">Confirm password:</label>
+        <input type="password" name="pass" id="confirmpassword"><br><br>
+
+             <label for="name">Adress:</label>
+             <textarea name="adress" id="ad" cols="10">Adress</textarea><br><br>
+
+             <label for="Gender">Gender: </label>
+        Female<input type="radio" name="gender" checked>
+        Male<input type="radio" name="gender"><br><br>
+
+        <label for="age" min="7" max="100">Age</label>
+        <input type="number"><br><br>
+
+        <label for="dob">DOB</label>
+        <input type="date"><br><br>
+
+        <label for="Evt">Event</label>
+        <input list="events">
+        <datalist id="events">
+             <option>Quiz</option>
+            <optio>Hackathon</option>
+            <option>Presentation</option>
+            <option>Project Expo</option>
+        </datalist>
+        <!-- <select name="menu" /*multiple*/>
+            <option value="slt">SELECT</option>
+            <option value="sng">Songs</option>
+            <option value="sng">Dance</option>
+            <option value="sng">Drama</option>
+        </select><br><br> -->
+               Semister<select name="sem">
+            <option value="slt">1</option>
+            <option value="sng">2</option>
+            <option value="sng">3</option>
+            <option value="sng">4</option>
+        </select><br><br>
+
+        <input type="checkbox" name="desclaimer" id="d" checked>I agree T&C <br><br>
+        profile:<input type="file" accept="image/webp"><br><br>
+
+                <!-- <input type="submit" name="reg" id="r"> -->
+                 <button  type="button" id="ActionBtn">Signup</button>
+                 <p id="error" style="color:red;"></p>
+    </form>
+    </fieldset>
+
+
+    <script>
+
+console.log("red loaded")
+
+const ActionBtn=document.querySelector("#ActionBtn");
+const emailInput=document.querySelector("#email");
+const passwordInput=document.querySelector("#password");
+const error = document.querySelector("#error");
+const confirmPsw=document.querySelector("#confirmpassword");
+
+
+  
+ActionBtn.addEventListener("click",(e)=>{
+    
+    e.preventDefault();
+
+    const email=emailInput.value.trim();
+    const password=passwordInput.value.trim();
+    const confirmpassword=confirmPsw.value.trim();
+
+    if(!email|| !password || !confirmpassword){
+        error.textContent="All Feilds are required";
+        return;
+    }
+    if(password.length<6 || confirmpassword.length<6){
+        error.textContent="Password should be at least 6 charachters";
+        return;
+    }
+    if(password!==confirmpassword){
+        error.textContent="Passwords do not match";
+        return;
+
+    }
+
+    // error.textContent="";
+
+    let users=JSON.parse(localStorage.getItem("users"))||[];
+
+    const  userExists = users.some(user=>user.email===email); //some()	true / false	Checking existence
+
+    if(userExists){
+        error.textContent=("Email already registered");
+        return;
+    }
+
+     users.push({ email, password });
+
+    localStorage.setItem("users",JSON.stringify(users));
+
+    alert("signup succesful! Please login.");
+
+    window.location.href="login.html";
+
+ });
+
+</script>
+</body>
+</html>
